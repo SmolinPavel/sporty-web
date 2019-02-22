@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
 
-const position = [53.891, 27.601];
+import {
+  API_GET_FIELDS,
+  DEFAULT_LOCATION,
+  DEFAULT_ZOOM
+} from '../../constants';
 
 const CustomMap = () => {
   const [fields, setFields] = useState([]);
 
   async function fetchFields() {
-    console.log('test');
-    const response = await fetch(
-      'https://sporty-brosky.herokuapp.com/api/1.0/fields'
-    );
+    const response = await fetch(API_GET_FIELDS);
     const fields = await response.json();
     setFields(fields);
   }
@@ -22,7 +23,12 @@ const CustomMap = () => {
   console.log('fields', fields);
 
   return (
-    <Map center={position} zoom={9} style={{ height: '100vh', width: '100%' }} zoomControl>
+    <Map
+      center={DEFAULT_LOCATION}
+      zoom={DEFAULT_ZOOM}
+      style={{ height: '100vh', width: '100%' }}>
+      <ZoomControl position='bottomright' />
+
       <TileLayer
         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
