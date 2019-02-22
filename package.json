@@ -1,6 +1,7 @@
 {
   "name": "sporty-web",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "author": "Pavel Smolin <isingwithaz@gmail.com>",
   "private": true,
   "dependencies": {
     "leaflet": "^1.4.0",
