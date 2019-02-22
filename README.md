@@ -16,7 +16,8 @@ npm start
 
 ### Stack 💻
 
--   🥊 React HOOKS!
+-   🥊 React with HOOKS!
+-   🗾 Leaflet maps 
 -   🕌 Jest tests (later.. maybe..)
 
 ### Thanks
@@ -29,7 +30,7 @@ Demo [link](https://sporty-brosky.herokuapp.com/api/1.0/fields)
 
 Node.js (express 🚂) with ES6 modules 💡
 
-# 🙊 SportyBrosky
+### 🙊 What is SportyBrosky?
 
 The idea is to create an app where you could share some useful sports data like fields and so on...
 
