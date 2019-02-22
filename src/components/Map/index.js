@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
+import { Map, TileLayer, ZoomControl } from 'react-leaflet';
+
+import Marker from '../Marker';
 
 import {
   API_GET_FIELDS,
@@ -20,8 +22,6 @@ const CustomMap = () => {
     fetchFields();
   }, []);
 
-  console.log('fields', fields);
-
   return (
     <Map
       center={DEFAULT_LOCATION}
@@ -33,38 +33,9 @@ const CustomMap = () => {
         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       />
-      {fields.map(
-        ({
-          date,
-          name,
-          type,
-          _id: id,
-          location: { lat, long } = {},
-          user: { name: userName } = {}
-        }) => {
-          return (
-            <Marker position={[lat, long]} key={id}>
-              <Popup>
-                <h2>
-                  <span role='img' aria-label='footbal emoji'>
-                    🥅
-                  </span>{' '}
-                  {name}
-                </h2>
-                <ul>
-                  <li>Field id: {id}</li>
-                  <li>Field type: {type}</li>
-                  <li>
-                    Location: {lat}/{long}
-                  </li>
-                  <li>Created By: {userName}</li>
-                  <li>Created At: {date}</li>
-                </ul>
-              </Popup>
-            </Marker>
-          );
-        }
-      )}
+      {fields.map(field => (
+        <Marker field={field} />
+      ))}
     </Map>
   );
 };
