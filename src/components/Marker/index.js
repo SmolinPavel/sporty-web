@@ -40,8 +40,8 @@ const CustomMarker = ({
             <li>
               Phones:
               <ul>
-                {phones.map(phone => (
-                  <li>
+                {phones.map((phone, idx) => (
+                  <li key={`${idx}-${phone}`}>
                     <a href={`tel:${phone}`}>{phone}</a>
                   </li>
                 ))}
@@ -53,7 +53,7 @@ const CustomMarker = ({
               Photos:
               <ul>
                 {photos.map((photo, idx) => (
-                  <li>
+                  <li key={`${idx}-${photo}`}>
                     <img src={photo} width='80' alt={`field-${idx}`} />
                   </li>
                 ))}

@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Map, TileLayer, ZoomControl } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 
 import Loader from '../Loader';
 import Marker from '../Marker';
+
+import { getPosition } from '../../helpers';
 
 import 'react-leaflet-markercluster/dist/styles.min.css';
 
@@ -14,7 +16,7 @@ import {
 } from '../../constants';
 
 const CustomMap = () => {
-  const mapRef = useRef(null);
+  const [center, setCenter] = useState(DEFAULT_LOCATION);
   const [fields, setFields] = useState([]);
 
   async function fetchFields() {
@@ -23,21 +25,27 @@ const CustomMap = () => {
     setFields(fields);
   }
 
+  async function getCurrentLocation() {
+    const position = await getPosition();
+    const { coords: { latitude, longitude } = {} } = position;
+    setCenter([latitude, longitude]);
+  }
+
   useEffect(() => {
-    setTimeout(() => {
-      const map = mapRef.current;
-      if (map != null) {
-        console.log('test', map);
-        map.leafletElement.locate();
-      }
-    }, 5000);
+    getCurrentLocation();
+  }, ['center']);
+
+  useEffect(() => {
     fetchFields();
   }, ['fields']);
 
+  if (fields.length === 0) {
+    return <Loader text='💩 Loading...' />;
+  }
+
   return (
     <Map
-      center={DEFAULT_LOCATION}
-      ref={mapRef}
+      center={center}
       style={{ height: '100vh', width: '100%' }}
       zoom={DEFAULT_ZOOM}>
       <ZoomControl position='bottomright' />
@@ -46,7 +54,6 @@ const CustomMap = () => {
         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       />
-      {fields.length === 0 && <Loader text='💩 Loading...' />}
       <MarkerClusterGroup
         spiderLegPolylineOptions={{
           weight: 0,

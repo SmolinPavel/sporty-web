@@ -1,7 +1,7 @@
 // Location
-export const DEFATUL_LAT = 53.891;
-export const DEFATUL_LONG = 37.601;
-export const DEFAULT_LOCATION = [DEFATUL_LAT, DEFATUL_LONG];
+export const DEFAULT_LAT = 53.891;
+export const DEFAULT_LONG = 27.601;
+export const DEFAULT_LOCATION = [DEFAULT_LAT, DEFAULT_LONG];
 
 // Zoom
 export const DEFAULT_ZOOM = 8;

@@ -6,3 +6,9 @@ export const formatDate = date => {
   
   return `${date.getFullYear()}-${monthString}-${currentDate}`;
 };
+
+export const getPosition = function (options) {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject, options);
+  });
+}
