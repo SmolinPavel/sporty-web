@@ -1,27 +1,19 @@
 import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
 
+import { formatDate } from '../../helpers';
 import stadiumIcon from '../CustomIcons/Stadium';
-
-export const pointerIcon = new L.Icon({
-  iconUrl: require('../../assets/pointerIcon.svg'),
-  iconRetinaUrl: require('../../assets/pointerIcon.svg'),
-  iconAnchor: [5, 55],
-  popupAnchor: [10, -44],
-  iconSize: [25, 55],
-  shadowUrl: '../../assets/pointerIcon.svg',
-  shadowSize: [68, 95],
-  shadowAnchor: [20, 92]
-});
 
 const CustomMarker = ({
   field: {
+    address,
     date,
+    description,
     name,
+    location: { lat, long } = {},
+    info: { phones, photos, url } = {},
     type,
     _id: id,
-    location: { lat, long } = {},
     user: { name: userName } = {}
   } = {}
 }) => (
@@ -35,13 +27,46 @@ const CustomMarker = ({
           {name}
         </h2>
         <ul>
-          <li>Field id: {id}</li>
+          {/* <li>Field id: {id}</li> */}
+          {address && <li>Address: {address}</li>}
           <li>Field type: {type}</li>
-          <li>
+          {/* <li>
             Location: {lat}/{long}
-          </li>
+          </li> */}
           <li>Created By: {userName}</li>
-          <li>Created At: {date}</li>
+          <li>Created At: {formatDate(new Date(date))}</li>
+          {description && <li>Description: {description}</li>}
+          {phones.length > 0 && (
+            <li>
+              Phones:
+              <ul>
+                {phones.map(phone => (
+                  <li>
+                    <a href={`tel:${phone}`}>{phone}</a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          )}
+          {photos.length > 0 && (
+            <li>
+              Photos:
+              <ul>
+                {photos.map((photo, idx) => (
+                  <li>
+                    <img src={photo} width='80' alt={`field-${idx}`} />
+                  </li>
+                ))}
+              </ul>
+            </li>
+          )}
+          {url && (
+            <li>
+              <a href={url} target='_blank' rel='noopener noreferrer'>
+                {url}
+              </a>
+            </li>
+          )}
         </ul>
       </>
     </Popup>

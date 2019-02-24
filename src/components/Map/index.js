@@ -26,6 +26,8 @@ const CustomMap = () => {
     fetchFields();
   }, []);
 
+  console.log('fields', fields);
+
   return (
     <Map
       center={DEFAULT_LOCATION}
