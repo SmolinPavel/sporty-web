@@ -24,19 +24,19 @@ const CustomMap = () => {
   }
 
   useEffect(() => {
-    const map = mapRef.current;
-    console.log('test');
-    if (map != null) {
-      console.log('useFef');
-      map.leafletElement.locate();
-    }
+    setTimeout(() => {
+      const map = mapRef.current;
+      if (map != null) {
+        console.log('test', map);
+        map.leafletElement.locate();
+      }
+    }, 5000);
     fetchFields();
-  }, []);
-
-  console.log('fields', fields);
+  }, ['fields']);
 
   return (
     <Map
+      center={DEFAULT_LOCATION}
       ref={mapRef}
       style={{ height: '100vh', width: '100%' }}
       zoom={DEFAULT_ZOOM}>
