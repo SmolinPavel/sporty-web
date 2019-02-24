@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Map, TileLayer, ZoomControl } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 
@@ -14,6 +14,7 @@ import {
 } from '../../constants';
 
 const CustomMap = () => {
+  const mapRef = useRef(null);
   const [fields, setFields] = useState([]);
 
   async function fetchFields() {
@@ -23,6 +24,12 @@ const CustomMap = () => {
   }
 
   useEffect(() => {
+    const map = mapRef.current;
+    console.log('test');
+    if (map != null) {
+      console.log('useFef');
+      map.leafletElement.locate();
+    }
     fetchFields();
   }, []);
 
@@ -30,26 +37,23 @@ const CustomMap = () => {
 
   return (
     <Map
-      center={DEFAULT_LOCATION}
-      zoom={DEFAULT_ZOOM}
-      style={{ height: '100vh', width: '100%' }}>
+      ref={mapRef}
+      style={{ height: '100vh', width: '100%' }}
+      zoom={DEFAULT_ZOOM}>
       <ZoomControl position='bottomright' />
 
       <TileLayer
         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       />
-      {
-        fields.length === 0 &&
-        <Loader text="💩 Loading..." />
-      }
+      {fields.length === 0 && <Loader text='💩 Loading...' />}
       <MarkerClusterGroup
         spiderLegPolylineOptions={{
           weight: 0,
           opacity: 0
         }}>
         {fields.map(field => (
-          <Marker field={field} key={field._id}/>
+          <Marker field={field} key={field._id} />
         ))}
       </MarkerClusterGroup>
     </Map>
