@@ -3,11 +3,18 @@
   "version": "1.0.0",
   "author": "Pavel Smolin <isingwithaz@gmail.com>",
   "private": true,
+  "keywords": [
+    "react",
+    "map",
+    "leaflet"
+  ],
   "dependencies": {
-    "leaflet": "^1.4.0",
+    "leaflet": "^1.3.1",
+    "leaflet.markercluster": "^1.3.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "react-leaflet": "^2.2.1",
+    "react-leaflet": "^1.9.1",
+    "react-leaflet-markercluster": "^1.1.8",
     "react-scripts": "2.1.5"
   },
   "scripts": {

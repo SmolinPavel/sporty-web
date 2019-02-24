@@ -12,8 +12,8 @@ export const pointerIcon = new L.Icon({
   iconSize: [25, 55],
   shadowUrl: '../../assets/pointerIcon.svg',
   shadowSize: [68, 95],
-  shadowAnchor: [20, 92],
-})
+  shadowAnchor: [20, 92]
+});
 
 const CustomMarker = ({
   field: {
@@ -27,21 +27,23 @@ const CustomMarker = ({
 }) => (
   <Marker position={[lat, long]} key={id} icon={stadiumIcon}>
     <Popup>
-      <h2>
-        <span role='img' aria-label='footbal emoji'>
-          🥅
-        </span>{' '}
-        {name}
-      </h2>
-      <ul>
-        <li>Field id: {id}</li>
-        <li>Field type: {type}</li>
-        <li>
-          Location: {lat}/{long}
-        </li>
-        <li>Created By: {userName}</li>
-        <li>Created At: {date}</li>
-      </ul>
+      <>
+        <h2>
+          <span role='img' aria-label='footbal emoji'>
+            🥅
+          </span>{' '}
+          {name}
+        </h2>
+        <ul>
+          <li>Field id: {id}</li>
+          <li>Field type: {type}</li>
+          <li>
+            Location: {lat}/{long}
+          </li>
+          <li>Created By: {userName}</li>
+          <li>Created At: {date}</li>
+        </ul>
+      </>
     </Popup>
   </Marker>
 );

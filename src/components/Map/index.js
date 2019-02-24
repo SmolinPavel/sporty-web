@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Map, TileLayer, ZoomControl } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-markercluster';
 
 import Marker from '../Marker';
+
+import 'react-leaflet-markercluster/dist/styles.min.css';
 
 import {
   API_GET_FIELDS,
@@ -33,9 +36,15 @@ const CustomMap = () => {
         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       />
-      {fields.map(field => (
-        <Marker field={field} />
-      ))}
+      <MarkerClusterGroup
+        spiderLegPolylineOptions={{
+          weight: 0,
+          opacity: 0
+        }}>
+        {fields.map(field => (
+          <Marker field={field} key={field._id}/>
+        ))}
+      </MarkerClusterGroup>
     </Map>
   );
 };
