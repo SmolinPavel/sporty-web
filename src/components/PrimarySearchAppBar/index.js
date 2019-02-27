@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -29,7 +29,7 @@ class PrimarySearchAppBar extends React.Component {
   };
 
   handleProfileMenuOpen = event => {
-    this.setState({ anchorEl: event.currentTarget });
+    this.props.history.push('/login');
   };
 
   handleMenuClose = () => {
@@ -90,7 +90,7 @@ class PrimarySearchAppBar extends React.Component {
           <IconButton color='inherit'>
             <AccountCircle />
           </IconButton>
-          <p>Profile</p>
+          <p>Login</p>
         </MenuItem>
       </Menu>
     );
@@ -129,7 +129,9 @@ class PrimarySearchAppBar extends React.Component {
               </div>
               <div className={classes.grow} />
               <div className={classes.sectionDesktop}>
-                <Link to='/login' style={{ color: 'white', textDecoration: 'none' }}>
+                <Link
+                  to='/login'
+                  style={{ color: 'white', textDecoration: 'none' }}>
                   <Button color='inherit'>Login</Button>
                 </Link>
                 {/* <IconButton color='inherit'>
@@ -160,8 +162,8 @@ class PrimarySearchAppBar extends React.Component {
               </div>
             </Toolbar>
           </AppBar>
-          {/* {renderMenu}
-          {renderMobileMenu} */}
+          {renderMenu}
+          {renderMobileMenu}
         </div>
       </>
     );
@@ -172,4 +174,4 @@ PrimarySearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PrimarySearchAppBar);
+export default withRouter(withStyles(styles)(PrimarySearchAppBar));
