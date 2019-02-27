@@ -2,7 +2,6 @@ import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
 
 import { formatDate } from '../../helpers';
-import stadiumIcon from '../CustomIcons/Stadium';
 
 const CustomMarker = ({
   field: {
@@ -17,7 +16,7 @@ const CustomMarker = ({
     user: { name: userName } = {}
   } = {}
 }) => (
-  <Marker position={[lat, long]} key={id} icon={stadiumIcon}>
+  <Marker position={[lat, long]} key={id}>
     <Popup>
       <>
         <h2>
@@ -27,12 +26,8 @@ const CustomMarker = ({
           {name}
         </h2>
         <ul>
-          {/* <li>Field id: {id}</li> */}
           {address && <li>Address: {address}</li>}
           <li>Field type: {type}</li>
-          {/* <li>
-            Location: {lat}/{long}
-          </li> */}
           <li>Created By: {userName}</li>
           <li>Created At: {formatDate(new Date(date))}</li>
           {description && <li>Description: {description}</li>}
