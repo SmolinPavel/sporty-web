@@ -10,8 +10,10 @@ import 'react-leaflet-markercluster/dist/styles.min.css';
 const CustomMap = ({ center, fields }) => (
   <Map
     center={center}
-    style={{ height: 'calc(100vh - 64px)', width: '100%' }}
-    zoom={DEFAULT_ZOOM}>
+    style={{ height: '100vh', width: '100%' }}
+    zoom={DEFAULT_ZOOM}
+    zoomControl={false}
+    >
     <ZoomControl position='bottomright' />
 
     <TileLayer
