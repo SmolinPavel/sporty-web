@@ -8,6 +8,7 @@ import PrimarySearchAppBar from '../PrimarySearchAppBar';
 import Loader from '../Loader';
 import Map from '../Map';
 import Login from '../Login';
+import Register from '../Register';
 
 import { getPosition } from '../../helpers';
 
@@ -48,6 +49,7 @@ const App = () => {
           <PrimarySearchAppBar />
           <Switch>
             <Route path='/login' component={Login} />
+            <Route path='/register' component={Register} />
             <Route
               exact
               path='/'

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link, withRouter } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -11,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
   main: {
@@ -46,7 +48,7 @@ const styles = theme => ({
   }
 });
 
-function SignIn(props) {
+function Login(props) {
   const { classes } = props;
 
   return (
@@ -57,7 +59,7 @@ function SignIn(props) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Sign in
+          Login
         </Typography>
         <form className={classes.form}>
           <FormControl margin='normal' required fullWidth>
@@ -79,16 +81,23 @@ function SignIn(props) {
             variant='contained'
             color='primary'
             className={classes.submit}>
-            Sign in
+            Login
           </Button>
         </form>
+        <Divider />
+        <FormControl fullWidth margin='normal'>
+          <Button variant='contained' fullWidth className={classes.button} 
+          onClick={() => props.history.push('/register')}>
+            Don't have an account yet?
+          </Button>
+        </FormControl>
       </Paper>
     </main>
   );
 }
 
-SignIn.propTypes = {
+Login.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SignIn);
+export default withRouter(withStyles(styles)(Login));
