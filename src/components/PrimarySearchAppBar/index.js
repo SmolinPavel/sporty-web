@@ -20,16 +20,15 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 
 import { styles } from './styles';
-import { white } from 'ansi-colors';
 
-class PrimarySearchAppBar extends React.Component {
+class PrimarySearchAppBar extends React.PureComponent {
   state = {
     anchorEl: null,
     mobileMoreAnchorEl: null
   };
 
   handleProfileMenuOpen = event => {
-    this.props.history.push('/login');
+    this.setState({ anchorEl: event.currentTarget });
   };
 
   handleMenuClose = () => {
@@ -43,6 +42,11 @@ class PrimarySearchAppBar extends React.Component {
 
   handleMobileMenuClose = () => {
     this.setState({ mobileMoreAnchorEl: null });
+  };
+
+  handleLogout = () => {
+    this.props.logout();
+    this.handleMenuClose();
   };
 
   render() {
@@ -60,6 +64,7 @@ class PrimarySearchAppBar extends React.Component {
         onClose={this.handleMenuClose}>
         <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
         <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+        <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
       </Menu>
     );
 
@@ -128,29 +133,41 @@ class PrimarySearchAppBar extends React.Component {
                 />
               </div>
               <div className={classes.grow} />
+              <Typography
+                className={classes.title}
+                variant='h6'
+                color='inherit'
+                noWrap>
+                Hi, {this.props.name} You Are Pidor 🤣
+              </Typography>
               <div className={classes.sectionDesktop}>
-                <Link
-                  to='/login'
-                  style={{ color: 'white', textDecoration: 'none' }}>
-                  <Button color='inherit'>Login</Button>
-                </Link>
-                {/* <IconButton color='inherit'>
-                  <Badge badgeContent={4} color='secondary'>
-                    <MailIcon />
-                  </Badge>
-                </IconButton>
-                <IconButton color='inherit'>
-                  <Badge badgeContent={17} color='secondary'>
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton>
-                <IconButton
-                  aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                  aria-haspopup='true'
-                  onClick={this.handleProfileMenuOpen}
-                  color='inherit'>
-                  <AccountCircle />
-                </IconButton> */}
+                {this.props.isAuth ? (
+                  <>
+                    <IconButton color='inherit'>
+                      <Badge badgeContent={4} color='secondary'>
+                        <MailIcon />
+                      </Badge>
+                    </IconButton>
+                    <IconButton color='inherit'>
+                      <Badge badgeContent={17} color='secondary'>
+                        <NotificationsIcon />
+                      </Badge>
+                    </IconButton>
+                    <IconButton
+                      aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                      aria-haspopup='true'
+                      onClick={this.handleProfileMenuOpen}
+                      color='inherit'>
+                      <AccountCircle />
+                    </IconButton>
+                  </>
+                ) : (
+                  <Link
+                    to='/login'
+                    style={{ color: 'white', textDecoration: 'none' }}>
+                    <Button color='inherit'>Login</Button>
+                  </Link>
+                )}
               </div>
               <div className={classes.sectionMobile}>
                 <IconButton
@@ -171,7 +188,10 @@ class PrimarySearchAppBar extends React.Component {
 }
 
 PrimarySearchAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  isAuth: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired,
+  name: PropTypes.string
 };
 
 export default withRouter(withStyles(styles)(PrimarySearchAppBar));

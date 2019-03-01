@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import muiTheme from '../../theme/muiTheme';
 
+import { AuthConsumer, AuthProvider } from '../../contexts';
+
 import PrimarySearchAppBar from '../PrimarySearchAppBar';
 import Loader from '../Loader';
 import Map from '../Map';
@@ -45,20 +47,32 @@ const App = () => {
   return (
     <MuiThemeProvider theme={muiTheme}>
       <Router>
-        <>
-          <PrimarySearchAppBar />
-          <Switch>
-            <Route path='/login' component={Login} />
-            <Route path='/register' component={Register} />
-            <Route
-              exact
-              path='/'
-              render={props => (
-                <Map {...props} center={center} fields={fields} />
-              )}
-            />
-          </Switch>
-        </>
+        <AuthProvider>
+          <AuthConsumer>
+            {({ isAuth, login, logout, name }) => (
+              <>
+                <PrimarySearchAppBar isAuth={isAuth} logout={logout} name={name} />
+                <Switch>
+                  <Route
+                    path='/login'
+                    render={props => <Login {...props} login={login} />}
+                  />
+                  <Route
+                    path='/register'
+                    render={props => <Register {...props} login={login} />}
+                  />
+                  <Route
+                    exact
+                    path='/'
+                    render={props => (
+                      <Map {...props} center={center} fields={fields} />
+                    )}
+                  />
+                </Switch>
+              </>
+            )}
+          </AuthConsumer>
+        </AuthProvider>
       </Router>
     </MuiThemeProvider>
   );

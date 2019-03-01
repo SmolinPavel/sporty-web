@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -8,48 +8,40 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Divider from '@material-ui/core/Divider';
 
-const styles = theme => ({
-  main: {
-    width: 'auto',
-    display: 'block', // Fix IE 11 issue.
-    marginTop: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
-    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-      width: 400,
-      marginLeft: 'auto',
-      marginRight: 'auto'
+import { TOKEN_NAME_IN_STORE } from '../../constants';
+import LocalStorageHelper from '../../helpers/LocalStorageHelper';
+import { loginApi } from '../../api/auth';
+
+import { styles } from './styles';
+
+const Login = ({ classes, history, login }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState({});
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    try {
+      const res = await loginApi({
+        email,
+        password
+      });
+
+      const { token } = res;
+      LocalStorageHelper.addItem(TOKEN_NAME_IN_STORE, token);
+      login();
+      history.push('/');
+    } catch (err) {
+      setError(err);
     }
-  },
-  paper: {
-    marginTop: theme.spacing.unit * 15,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
-      .spacing.unit * 3}px`
-  },
-  avatar: {
-    margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing.unit
-  },
-  submit: {
-    marginTop: theme.spacing.unit * 3
-  }
-});
-
-function Login(props) {
-  const { classes } = props;
+  };
 
   return (
     <main className={classes.main}>
@@ -61,19 +53,38 @@ function Login(props) {
         <Typography component='h1' variant='h5'>
           Login
         </Typography>
-        <form className={classes.form}>
-          <FormControl margin='normal' required fullWidth>
+        <form className={classes.form} onSubmit={handleSubmit}>
+          <FormControl margin='normal' required fullWidth error={!!error.email}>
             <InputLabel htmlFor='email'>Email Address</InputLabel>
-            <Input id='email' name='email' autoComplete='email' autoFocus />
+            <Input
+              id='email'
+              name='email'
+              autoComplete='email'
+              autoFocus
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+            {!!error.email && (
+              <FormHelperText>{error.email}</FormHelperText>
+            )}
           </FormControl>
-          <FormControl margin='normal' required fullWidth>
+          <FormControl
+            margin='normal'
+            required
+            fullWidth
+            error={!!error.password}>
             <InputLabel htmlFor='password'>Password</InputLabel>
             <Input
               name='password'
               type='password'
               id='password'
               autoComplete='current-password'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
             />
+            {!!error.password && (
+              <FormHelperText>{error.password}</FormHelperText>
+            )}
           </FormControl>
           <Button
             type='submit'
@@ -84,20 +95,24 @@ function Login(props) {
             Login
           </Button>
         </form>
-        <Divider />
         <FormControl fullWidth margin='normal'>
-          <Button variant='contained' fullWidth className={classes.button} 
-          onClick={() => props.history.push('/register')}>
+          <Button
+            variant='contained'
+            fullWidth
+            className={classes.button}
+            onClick={() => history.push('/register')}>
             Don't have an account yet?
           </Button>
         </FormControl>
       </Paper>
     </main>
   );
-}
+};
 
 Login.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired
 };
 
 export default withRouter(withStyles(styles)(Login));
