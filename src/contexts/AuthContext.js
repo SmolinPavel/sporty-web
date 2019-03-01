@@ -20,7 +20,15 @@ const pureAuthProvider = ({ children, history }) => {
     LocalStorageHelper.removeItem(TOKEN_NAME_IN_STORE);
     history.push(ROUTES.LOGIN);
   };
-  const { _id, name } = jwtDecode(token);
+
+  let decodedToken;
+  try {
+    decodedToken = jwtDecode(token);
+  } catch (err) {
+    // 🙈
+  }
+
+  const name = (decodedToken && decodedToken.name) || '';
 
   return (
     <Provider value={{ isAuth, login, logout, name }}>{children}</Provider>
