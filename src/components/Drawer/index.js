@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
@@ -7,41 +8,59 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import LockIcon from '@material-ui/icons/Lock';
 
-const Drawer = ({ isOpen }) => (
-  <SwipeableDrawer
-    open={false}
-    onClose={() => console.log('2')}
-    onOpen={() => console.log('2')}>
-    <div
-      tabIndex={0}
-      role='button'
-      onClick={() => console.log('2')}
-      onKeyDown={() => console.log('2')}>
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  </SwipeableDrawer>
-);
+import { ROUTES } from '../../constants';
 
-export default Drawer;
+const Drawer = ({ history, isOpen, onClick }) => {
+  const handleUrl = url => {
+    onClick();
+    history.push(url);
+  };
+
+  return (
+    <SwipeableDrawer open={isOpen} onClose={onClick} onOpen={onClick}>
+      <div
+        tabIndex={0}
+        role='button'
+        onClick={() => console.log('onClick')}
+        onKeyDown={() => console.log('onKeyDown')}>
+        <List>
+          <ListItem button key='login' onClick={() => handleUrl(ROUTES.LOGIN)}>
+            <ListItemIcon>
+              <LockIcon />
+            </ListItemIcon>
+            <ListItemText primary='Login' />
+          </ListItem>
+          <ListItem
+            button
+            key='register'
+            onClick={() => handleUrl(ROUTES.REGISTER)}>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary='Register' />
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem button key='about'>
+            <ListItemIcon>
+              <LockIcon />
+            </ListItemIcon>
+            <ListItemText primary='About' />
+          </ListItem>
+
+          <ListItem button key='contacts'>
+            <ListItemIcon>
+              <LockIcon />
+            </ListItemIcon>
+            <ListItemText primary='Contacts' />
+          </ListItem>
+        </List>
+      </div>
+    </SwipeableDrawer>
+  );
+};
+
+export default withRouter(Drawer);

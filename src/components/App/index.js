@@ -40,7 +40,7 @@ const App = () => {
     fetchFields();
   }, ['fields']);
 
-  if (fields.length === 0) {
+  if (fields.length === 1) {
     return <Loader text='⛹🏻‍♂️ Loading...' />;
   }
 

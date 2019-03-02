@@ -15,7 +15,8 @@ export const styles = theme => ({
       display: 'none',
       [theme.breakpoints.up('sm')]: {
         display: 'block'
-      }
+      },
+      
     },
     search: {
       position: 'relative',

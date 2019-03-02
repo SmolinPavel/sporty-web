@@ -20,12 +20,14 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 
 import { ROUTES } from '../../constants';
+import Drawer from '../Drawer';
 
 import { styles } from './styles';
 
 class PrimarySearchAppBar extends React.PureComponent {
   state = {
     anchorEl: null,
+    isDrawerOpen: false,
     mobileMoreAnchorEl: null
   };
 
@@ -68,6 +70,9 @@ class PrimarySearchAppBar extends React.PureComponent {
     this.handleMobileMenuClose();
     this.goToMain();
   };
+
+  toggleDrawer = () =>
+    this.setState({ isDrawerOpen: !this.state.isDrawerOpen });
 
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
@@ -128,7 +133,8 @@ class PrimarySearchAppBar extends React.PureComponent {
               <IconButton
                 className={classes.menuButton}
                 color='inherit'
-                aria-label='Open drawer'>
+                aria-label='Open drawer'
+                onClick={this.toggleDrawer}>
                 <MenuIcon />
               </IconButton>
               <Link to='/' style={{ color: 'white', textDecoration: 'none' }}>
@@ -153,13 +159,15 @@ class PrimarySearchAppBar extends React.PureComponent {
                 />
               </div>
               <div className={classes.grow} />
-              <Typography
-                className={classes.title}
-                variant='h6'
-                color='inherit'
-                noWrap>
-                Hi, {this.props.name} You Are Pidor 🤣
-              </Typography>
+              {this.props.isAuth && (
+                <Typography
+                  className={classes.title}
+                  variant='h6'
+                  color='inherit'
+                  noWrap>
+                  Hi, {this.props.name} 🤣
+                </Typography>
+              )}
               <div className={classes.sectionDesktop}>
                 {this.props.isAuth ? (
                   <>
@@ -202,6 +210,7 @@ class PrimarySearchAppBar extends React.PureComponent {
           {renderMenu}
           {renderMobileMenu}
         </div>
+        <Drawer isOpen={this.state.isDrawerOpen} onClick={this.toggleDrawer} />
       </>
     );
   }
