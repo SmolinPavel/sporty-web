@@ -19,6 +19,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 
+import { ROUTES } from '../../constants';
+
 import { styles } from './styles';
 
 class PrimarySearchAppBar extends React.PureComponent {
@@ -47,6 +49,24 @@ class PrimarySearchAppBar extends React.PureComponent {
   handleLogout = () => {
     this.props.logout();
     this.handleMenuClose();
+  };
+
+  goToLogin = () => {
+    this.props.history.push(ROUTES.LOGIN);
+  };
+
+  goToMain = () => {
+    this.props.history.push(ROUTES.ROOT);
+  };
+
+  handleMobileGoToLogin = () => {
+    this.handleMobileMenuClose();
+    this.goToLogin();
+  };
+
+  handleMobileGoToMain = () => {
+    this.handleMobileMenuClose();
+    this.goToMain();
   };
 
   render() {
@@ -83,15 +103,15 @@ class PrimarySearchAppBar extends React.PureComponent {
           </IconButton>
           <p>Messages</p>
         </MenuItem>
-        <MenuItem onClick={this.handleMobileMenuClose}>
+        <MenuItem onClick={this.handleMobileGoToMain}>
           <IconButton color='inherit'>
-            <Badge badgeContent={11} color='secondary'>
+            <Badge badgeContent={1} color='secondary'>
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <p>Notifications</p>
+          <p>Home</p>
         </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
+        <MenuItem onClick={this.handleMobileGoToLogin}>
           <IconButton color='inherit'>
             <AccountCircle />
           </IconButton>
@@ -163,7 +183,7 @@ class PrimarySearchAppBar extends React.PureComponent {
                   </>
                 ) : (
                   <Link
-                    to='/login'
+                    to={ROUTES.LOGIN}
                     style={{ color: 'white', textDecoration: 'none' }}>
                     <Button color='inherit'>Login</Button>
                   </Link>
