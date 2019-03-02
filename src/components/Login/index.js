@@ -17,16 +17,21 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { TOKEN_NAME_IN_STORE } from '../../constants';
 import LocalStorageHelper from '../../helpers/LocalStorageHelper';
 import { loginApi } from '../../api/auth';
+import ball from '../../assets/ball.svg';
 
 import { styles } from './styles';
+
+import s from './styles.module.scss';
 
 const Login = ({ classes, history, login }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await loginApi({
@@ -41,15 +46,22 @@ const Login = ({ classes, history, login }) => {
     } catch (err) {
       setError(err);
     }
+    setLoading(false);
   };
 
   return (
     <main className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        {loading ? (
+          <div className={s.ballWrapper}>
+            <img src={ball} className={s.ball} alt='ball' />
+          </div>
+        ) : (
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+        )}
         <Typography component='h1' variant='h5'>
           Login
         </Typography>
@@ -64,9 +76,7 @@ const Login = ({ classes, history, login }) => {
               value={email}
               onChange={e => setEmail(e.target.value)}
             />
-            {!!error.email && (
-              <FormHelperText>{error.email}</FormHelperText>
-            )}
+            {!!error.email && <FormHelperText>{error.email}</FormHelperText>}
           </FormControl>
           <FormControl
             margin='normal'
