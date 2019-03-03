@@ -53,23 +53,10 @@ class PrimarySearchAppBar extends React.PureComponent {
     this.handleMenuClose();
   };
 
-  goToLogin = () => {
-    this.props.history.push(ROUTES.LOGIN);
-  };
-
-  goToMain = () => {
-    this.props.history.push(ROUTES.ROOT);
-  };
-
-  handleMobileGoToLogin = () => {
+  handleMobileLink = url => {
     this.handleMobileMenuClose();
-    this.goToLogin();
-  };
-
-  handleMobileGoToMain = () => {
-    this.handleMobileMenuClose();
-    this.goToMain();
-  };
+    this.props.history.push(url);
+  }
 
   toggleDrawer = () =>
     this.setState({ isDrawerOpen: !this.state.isDrawerOpen });
@@ -88,7 +75,7 @@ class PrimarySearchAppBar extends React.PureComponent {
         open={isMenuOpen}
         onClose={this.handleMenuClose}>
         <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+        <MenuItem onClick={this.handleMenuClose}>Create Field</MenuItem>
         <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
       </Menu>
     );
@@ -108,7 +95,7 @@ class PrimarySearchAppBar extends React.PureComponent {
           </IconButton>
           <p>Messages</p>
         </MenuItem>
-        <MenuItem onClick={this.handleMobileGoToMain}>
+        <MenuItem onClick={() => this.handleMobileLink(ROUTES.ROOT)}>
           <IconButton color='inherit'>
             <Badge badgeContent={1} color='secondary'>
               <NotificationsIcon />
@@ -116,7 +103,7 @@ class PrimarySearchAppBar extends React.PureComponent {
           </IconButton>
           <p>Home</p>
         </MenuItem>
-        <MenuItem onClick={this.handleMobileGoToLogin}>
+        <MenuItem onClick={() => this.handleMobileLink(ROUTES.LOGIN)}>
           <IconButton color='inherit'>
             <AccountCircle />
           </IconButton>

@@ -7,8 +7,14 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import AboutIcon from '@material-ui/icons/ImportContacts';
 import LockIcon from '@material-ui/icons/Lock';
+import RegisterIcon from '@material-ui/icons/PregnantWoman';
+import ContactIcon from '@material-ui/icons/ContactPhone';
+import DonateIcon from '@material-ui/icons/Redeem';
+import LanguageIcon from '@material-ui/icons/Language';
+import InputIcon from '@material-ui/icons/AddLocation';
+import RoomIcon from '@material-ui/icons/Room';
 
 import { ROUTES } from '../../constants';
 
@@ -37,25 +43,58 @@ const Drawer = ({ history, isOpen, onClick }) => {
             key='register'
             onClick={() => handleUrl(ROUTES.REGISTER)}>
             <ListItemIcon>
-              <InboxIcon />
+              <RegisterIcon />
             </ListItemIcon>
             <ListItemText primary='Register' />
+          </ListItem>
+          <ListItem
+            button
+            key='fields-map'
+            onClick={() => handleUrl(ROUTES.ROOT)}>
+            <ListItemIcon>
+              <RoomIcon />
+            </ListItemIcon>
+            <ListItemText primary='Fields Map' />
+          </ListItem>
+          <ListItem
+            button
+            key='create-field'
+            onClick={() => handleUrl(ROUTES.REGISTER)}>
+            <ListItemIcon>
+              <InputIcon />
+            </ListItemIcon>
+            <ListItemText primary='Create Field' />
+          </ListItem>
+          <ListItem
+            button
+            key='language'
+            onClick={() => handleUrl(ROUTES.REGISTER)}>
+            <ListItemIcon>
+              <LanguageIcon />
+            </ListItemIcon>
+            <ListItemText primary='Language' />
           </ListItem>
         </List>
         <Divider />
         <List>
           <ListItem button key='about'>
             <ListItemIcon>
-              <LockIcon />
+              <AboutIcon />
             </ListItemIcon>
-            <ListItemText primary='About' />
+            <ListItemText primary='About SportyBrosky' />
           </ListItem>
 
           <ListItem button key='contacts'>
             <ListItemIcon>
-              <LockIcon />
+              <ContactIcon />
             </ListItemIcon>
-            <ListItemText primary='Contacts' />
+            <ListItemText primary='Contact Us' />
+          </ListItem>
+          <ListItem button key='donate'>
+            <ListItemIcon>
+              <DonateIcon />
+            </ListItemIcon>
+            <ListItemText primary='Donate' />
           </ListItem>
         </List>
       </div>
