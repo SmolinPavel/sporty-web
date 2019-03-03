@@ -34,14 +34,11 @@ const App = () => {
   }
 
   useEffect(() => {
-    getCurrentLocation();
-  }, ['center']);
-
-  useEffect(() => {
     fetchFields();
-  }, ['fields']);
+    getCurrentLocation();
+  }, []);
 
-  if (fields.length === 1) {
+  if (fields.length === 0) {
     return <Loader text='⛹🏻‍♂️ Loading...' />;
   }
 

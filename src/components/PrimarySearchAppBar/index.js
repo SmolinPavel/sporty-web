@@ -58,6 +58,11 @@ class PrimarySearchAppBar extends React.PureComponent {
     this.handleMobileMenuClose();
   };
 
+  handleMenuLink = url => {
+    this.handleMenuClose();
+    this.props.history.push(url);
+  };
+
   handleMobileLink = url => {
     this.handleMobileMenuClose();
     this.props.history.push(url);
@@ -79,8 +84,8 @@ class PrimarySearchAppBar extends React.PureComponent {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMenuOpen}
         onClose={this.handleMenuClose}>
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>Create Field</MenuItem>
+        <MenuItem onClick={() => this.handleMenuLink(ROUTES.PROFILE)}>Profile</MenuItem>
+        <MenuItem onClick={() => this.handleMenuLink(ROUTES.CREATE_FIELD)}>Create Field</MenuItem>
         <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
       </Menu>
     );

@@ -9,7 +9,7 @@ export const DEFAULT_ZOOM = 8;
 // Api
 const localUrl = 'http://localhost:5000';
 const herokuUrl = 'https://sporty-brosky.herokuapp.com';
-const DOMEN = herokuUrl || localUrl;
+const DOMEN = localUrl;
 const BASE_URL = `${DOMEN}/api/1.0`;
 
 export const API_GET_FIELDS = `${BASE_URL}/fields`;
@@ -42,6 +42,7 @@ export const ROUTES = {
   LOGIN: '/login',
   REGISTER: '/register',
   CREATE_FIELD: '/create-field',
+  PROFILE: '/profile',
   PROFILES: '/profiles',
   PLAYERS: '/players',
   USERS: '/users'

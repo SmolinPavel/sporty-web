@@ -18,8 +18,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Map from '../Map';
 import FormLoadingIcon from '../FormLoadingIcon';
 
-import { TOKEN_NAME_IN_STORE } from '../../constants';
-import LocalStorageHelper from '../../helpers/LocalStorageHelper';
 import { createFieldApi } from '../../api/fields';
 
 import { styles } from './styles';
@@ -28,6 +26,8 @@ const CreateFieldForm = ({ center, classes, fields, history }) => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
+  const [url, setUrl] = useState('');
+  const [phones, setPhones] = useState('');
   const [lat, setLat] = useState('');
   const [lng, setLng] = useState('');
   const [error, setError] = useState({});
@@ -39,33 +39,38 @@ const CreateFieldForm = ({ center, classes, fields, history }) => {
     console.log(latlng);
   };
 
-  const updateFields = [...fields, {
-    location: {
-      type: 'point',
-      lat,
-      long: lng,
-    },
-    name,
-    address,
-    description,
-    date: new Date(),
-  }];
+  const updateFields =
+    lat && lng
+      ? [
+          ...fields,
+          {
+            location: {
+              type: 'point',
+              lat,
+              long: lng
+            },
+            name,
+            address,
+            description,
+            date: new Date(),
+            _id: 'new'
+          }
+        ]
+      : fields;
 
   const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await createFieldApi({
+      await createFieldApi({
         name,
         address,
         lat,
         long: lng,
-        description,
+        description
       });
 
-      const { token } = res;
-      LocalStorageHelper.addItem(TOKEN_NAME_IN_STORE, token);
       history.push('/');
     } catch (err) {
       setLoading(false);
@@ -173,6 +178,35 @@ const CreateFieldForm = ({ center, classes, fields, history }) => {
               height='300px'
               onClick={handleMapTap}
             />
+          </FormControl>
+          <FormControl margin='normal' fullWidth error={!!error.url}>
+            <InputLabel htmlFor='url'>Url</InputLabel>
+            <Input
+              id='url'
+              name='url'
+              type='text'
+              autoComplete='url'
+              autoFocus
+              value={name}
+              onChange={e => setUrl(e.target.value)}
+            />
+            {!!error.url && <FormHelperText>{error.url}</FormHelperText>}
+          </FormControl>
+
+          <FormControl margin='normal' fullWidth error={!!error.phones}>
+            <InputLabel htmlFor='phones'>Phones</InputLabel>
+            <Input
+              id='phones'
+              name='phones'
+              type='text'
+              autoComplete='phones'
+              autoFocus
+              value={name}
+              onChange={e => setPhones(e.target.value)}
+            />
+            {!!error.url ? (<FormHelperText>{error.url}</FormHelperText>) : (
+              <FormHelperText>Use comma to separate multiple phones like: +375234, +8123423</FormHelperText>
+            )}
           </FormControl>
 
           <Button
