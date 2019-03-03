@@ -14,14 +14,13 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+import FormLoadingIcon from '../FormLoadingIcon';
+
 import { TOKEN_NAME_IN_STORE } from '../../constants';
 import LocalStorageHelper from '../../helpers/LocalStorageHelper';
 import { loginApi } from '../../api/auth';
-import ball from '../../assets/ball.svg';
 
 import { styles } from './styles';
-
-import s from './styles.module.scss';
 
 const Login = ({ classes, history, login }) => {
   const [email, setEmail] = useState('');
@@ -44,24 +43,24 @@ const Login = ({ classes, history, login }) => {
       login();
       history.push('/');
     } catch (err) {
+      setLoading(false);
       setError(err);
     }
-    setLoading(false);
   };
 
   return (
     <main className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
-        {loading ? (
-          <div className={s.ballWrapper}>
-            <img src={ball} className={s.ball} alt='ball' />
-          </div>
-        ) : (
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-        )}
+        <FormLoadingIcon
+          loading={loading}
+          defaultIcon={
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+          }
+        />
+
         <Typography component='h1' variant='h5'>
           Login
         </Typography>

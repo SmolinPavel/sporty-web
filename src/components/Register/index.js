@@ -14,6 +14,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+import FormLoadingIcon from '../FormLoadingIcon';
+
 import { TOKEN_NAME_IN_STORE } from '../../constants';
 import LocalStorageHelper from '../../helpers/LocalStorageHelper';
 import { registerApi } from '../../api/auth';
@@ -26,9 +28,12 @@ const Register = ({ classes, history, login }) => {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [error, setError] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async e => {
     e.preventDefault();
+
+    setLoading(true);
 
     try {
       const res = await registerApi({
@@ -44,6 +49,7 @@ const Register = ({ classes, history, login }) => {
       history.push('/');
     } catch (err) {
       setError(err);
+      setLoading(false);
     }
   };
 
@@ -51,9 +57,14 @@ const Register = ({ classes, history, login }) => {
     <main className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+      <FormLoadingIcon
+          loading={loading}
+          defaultIcon={
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+          }
+        />
         <Typography component='h1' variant='h5'>
           Register
         </Typography>
