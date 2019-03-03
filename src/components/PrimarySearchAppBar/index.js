@@ -53,10 +53,15 @@ class PrimarySearchAppBar extends React.PureComponent {
     this.handleMenuClose();
   };
 
+  handleMobileLogout = () => {
+    this.props.logout();
+    this.handleMobileMenuClose();
+  };
+
   handleMobileLink = url => {
     this.handleMobileMenuClose();
     this.props.history.push(url);
-  }
+  };
 
   toggleDrawer = () =>
     this.setState({ isDrawerOpen: !this.state.isDrawerOpen });
@@ -87,14 +92,7 @@ class PrimarySearchAppBar extends React.PureComponent {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMobileMenuOpen}
         onClose={this.handleMenuClose}>
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color='inherit'>
-            <Badge badgeContent={4} color='secondary'>
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <p>Messages</p>
-        </MenuItem>
+
         <MenuItem onClick={() => this.handleMobileLink(ROUTES.ROOT)}>
           <IconButton color='inherit'>
             <Badge badgeContent={1} color='secondary'>
@@ -103,12 +101,30 @@ class PrimarySearchAppBar extends React.PureComponent {
           </IconButton>
           <p>Home</p>
         </MenuItem>
-        <MenuItem onClick={() => this.handleMobileLink(ROUTES.LOGIN)}>
+
+        <MenuItem onClick={() => this.handleMobileLink(ROUTES.CREATE_FIELD)}>
           <IconButton color='inherit'>
-            <AccountCircle />
+            <Badge badgeContent={4} color='secondary'>
+              <MailIcon />
+            </Badge>
           </IconButton>
-          <p>Login</p>
+          <p>Create New Field</p>
         </MenuItem>
+        {this.props.isAuth ? (
+          <MenuItem onClick={this.handleMobileLogout}>
+            <IconButton color='inherit'>
+              <AccountCircle />
+            </IconButton>
+            <p>Logout</p>
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={() => this.handleMobileLink(ROUTES.LOGIN)}>
+            <IconButton color='inherit'>
+              <AccountCircle />
+            </IconButton>
+            <p>Login</p>
+          </MenuItem>
+        )}
       </Menu>
     );
 
