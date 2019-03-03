@@ -11,10 +11,11 @@ import Loader from '../Loader';
 import Map from '../Map';
 import Login from '../Login';
 import Register from '../Register';
+import CreateFieldForm from '../CreateFieldForm';
 
 import { getPosition } from '../../helpers';
 
-import { API_GET_FIELDS, DEFAULT_LOCATION } from '../../constants';
+import { API_GET_FIELDS, DEFAULT_LOCATION, ROUTES } from '../../constants';
 
 const App = () => {
   const [center, setCenter] = useState(DEFAULT_LOCATION);
@@ -54,16 +55,19 @@ const App = () => {
                 <PrimarySearchAppBar isAuth={isAuth} logout={logout} name={name} />
                 <Switch>
                   <Route
-                    path='/login'
+                    path={ROUTES.LOGIN}
                     render={props => <Login {...props} login={login} />}
                   />
                   <Route
-                    path='/register'
+                    path={ROUTES.REGISTER}
                     render={props => <Register {...props} login={login} />}
                   />
                   <Route
-                    exact
-                    path='/'
+                    path={ROUTES.CREATE_FIELD}
+                    render={props => <CreateFieldForm {...props} center={center} fields={fields} />}
+                  />
+                  <Route
+                    path={ROUTES.ROOT}
                     render={props => (
                       <Map {...props} center={center} fields={fields} />
                     )}

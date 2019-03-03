@@ -1,3 +1,5 @@
+import { TOKEN_NAME_IN_STORE } from '../constants';
+
 class ApiHelper {
   static getHeaders = (authToken, contentType = 'application/json') => ({
     'Content-Type': contentType,
@@ -98,8 +100,7 @@ class ApiHelper {
   //   }
 
   static getAuthToken() {
-    return 'test-token';
-    // return localStorage.getItem(TOKEN_NAME_IN_STORE);
+    return localStorage.getItem(TOKEN_NAME_IN_STORE);
   }
 
   static isAuthenticated = () => ApiHelper.getAuthToken() != null;

@@ -13,7 +13,7 @@ import RegisterIcon from '@material-ui/icons/PregnantWoman';
 import ContactIcon from '@material-ui/icons/ContactPhone';
 import DonateIcon from '@material-ui/icons/Redeem';
 import LanguageIcon from '@material-ui/icons/Language';
-import InputIcon from '@material-ui/icons/AddLocation';
+import AddLocationIcon from '@material-ui/icons/AddLocation';
 import RoomIcon from '@material-ui/icons/Room';
 
 import { ROUTES } from '../../constants';
@@ -59,9 +59,9 @@ const Drawer = ({ history, isOpen, onClick }) => {
           <ListItem
             button
             key='create-field'
-            onClick={() => handleUrl(ROUTES.REGISTER)}>
+            onClick={() => handleUrl(ROUTES.CREATE_FIELD)}>
             <ListItemIcon>
-              <InputIcon />
+              <AddLocationIcon />
             </ListItemIcon>
             <ListItemText primary='Create Field' />
           </ListItem>

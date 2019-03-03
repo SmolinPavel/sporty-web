@@ -7,12 +7,13 @@ import { DEFAULT_ZOOM } from '../../constants';
 
 import 'react-leaflet-markercluster/dist/styles.min.css';
 
-const CustomMap = ({ center, fields }) => (
+const CustomMap = ({ center, fields, height = '100vh', onClick = () => {} }) => (
   <Map
     center={center}
-    style={{ height: '100vh', width: '100%' }}
+    style={{ height, width: '100%' }}
     zoom={DEFAULT_ZOOM}
     zoomControl={false}
+    onClick={onClick}
     >
     <ZoomControl position='bottomright' />
 

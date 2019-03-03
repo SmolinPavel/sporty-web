@@ -10,7 +10,7 @@ const CustomMarker = ({
     description,
     name,
     location: { lat, long } = {},
-    info: { phones, photos, url } = {},
+    info: { phones = [], photos = [], url } = {},
     type,
     _id: id,
     user: { name: userName } = {}
