@@ -18,6 +18,10 @@ export const styles = theme => ({
       },
       
     },
+    greeting: {
+      width: '100%',
+      textAlign: 'center'
+    },
     search: {
       position: 'relative',
       borderRadius: theme.shape.borderRadius,

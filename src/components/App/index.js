@@ -12,6 +12,7 @@ import Map from '../Map';
 import Login from '../Login';
 import Register from '../Register';
 import CreateFieldForm from '../CreateFieldForm';
+import Profile from '../Profile';
 
 import { getPosition } from '../../helpers';
 
@@ -62,6 +63,10 @@ const App = () => {
                   <Route
                     path={ROUTES.CREATE_FIELD}
                     render={props => <CreateFieldForm {...props} center={center} fields={fields} />}
+                  />
+                  <Route
+                    path={ROUTES.PROFILE}
+                    render={props => <Profile {...props} center={center} />}
                   />
                   <Route
                     path={ROUTES.ROOT}

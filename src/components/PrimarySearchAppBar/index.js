@@ -84,8 +84,12 @@ class PrimarySearchAppBar extends React.PureComponent {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMenuOpen}
         onClose={this.handleMenuClose}>
-        <MenuItem onClick={() => this.handleMenuLink(ROUTES.PROFILE)}>Profile</MenuItem>
-        <MenuItem onClick={() => this.handleMenuLink(ROUTES.CREATE_FIELD)}>Create Field</MenuItem>
+        <MenuItem onClick={() => this.handleMenuLink(ROUTES.PROFILE)}>
+          Profile
+        </MenuItem>
+        <MenuItem onClick={() => this.handleMenuLink(ROUTES.CREATE_FIELD)}>
+          Create Field
+        </MenuItem>
         <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
       </Menu>
     );
@@ -97,7 +101,6 @@ class PrimarySearchAppBar extends React.PureComponent {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMobileMenuOpen}
         onClose={this.handleMenuClose}>
-
         <MenuItem onClick={() => this.handleMobileLink(ROUTES.ROOT)}>
           <IconButton color='inherit'>
             <Badge badgeContent={1} color='secondary'>
@@ -154,7 +157,7 @@ class PrimarySearchAppBar extends React.PureComponent {
                   SportyBrosky
                 </Typography>
               </Link>
-              <div className={classes.search}>
+              {/* <div className={classes.search}>
                 <div className={classes.searchIcon}>
                   <SearchIcon />
                 </div>
@@ -165,17 +168,15 @@ class PrimarySearchAppBar extends React.PureComponent {
                     input: classes.inputInput
                   }}
                 />
-              </div>
-              <div className={classes.grow} />
+              </div> */}
               {this.props.isAuth && (
-                <Typography
-                  className={classes.title}
-                  variant='h6'
-                  color='inherit'
-                  noWrap>
-                  Hi, {this.props.name} 🤣
-                </Typography>
+                <div className={classes.greeting}>
+                  <Typography variant='h6' color='inherit' noWrap>
+                    Hi, {this.props.name} 🤣
+                  </Typography>
+                </div>
               )}
+              <div className={classes.grow} />
               <div className={classes.sectionDesktop}>
                 {this.props.isAuth ? (
                   <>

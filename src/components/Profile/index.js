@@ -11,6 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import TextField from '@material-ui/core/TextField';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
+import FaceIcon from '@material-ui/icons/Face';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -22,8 +23,7 @@ import { createFieldApi } from '../../api/fields';
 
 import { styles } from './styles';
 
-const CreateFieldForm = ({ center, classes, fields, history }) => {
-  const [name, setName] = useState('');
+const Profile = ({ center, classes, history }) => {
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState('');
@@ -36,46 +36,25 @@ const CreateFieldForm = ({ center, classes, fields, history }) => {
   const handleMapTap = ({ latlng }) => {
     setLat(latlng.lat);
     setLng(latlng.lng);
-    console.log(latlng);
   };
-
-  const updateFields =
-    lat && lng
-      ? [
-          ...fields,
-          {
-            location: {
-              type: 'point',
-              lat,
-              long: lng
-            },
-            name,
-            address,
-            description,
-            date: new Date(),
-            _id: 'new'
-          }
-        ]
-      : fields;
 
   const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      await createFieldApi({
-        name,
-        address,
-        lat,
-        long: lng,
-        description
-      });
+    // try {
+    //   await createFieldApi({
+    //     address,
+    //     lat,
+    //     long: lng,
+    //     description
+    //   });
 
-      history.push('/');
-    } catch (err) {
-      setLoading(false);
-      setError(err);
-    }
+    //   history.push('/');
+    // } catch (err) {
+    //   setLoading(false);
+    //   setError(err);
+    // }
   };
 
   return (
@@ -86,34 +65,21 @@ const CreateFieldForm = ({ center, classes, fields, history }) => {
           loading={loading}
           defaultIcon={
             <Avatar className={classes.avatar}>
-              <AddLocationIcon />
+              <FaceIcon />
             </Avatar>
           }
         />
 
         <Typography component='h1' variant='h5'>
-          Create New Sports Field
+          User Profile
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
-          <FormControl margin='normal' required fullWidth error={!!error.name}>
-            <InputLabel htmlFor='name'>Field Name</InputLabel>
-            <Input
-              id='name'
-              name='name'
-              type='text'
-              autoComplete='name'
-              autoFocus
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
-            {!!error.name && <FormHelperText>{error.name}</FormHelperText>}
-          </FormControl>
           <FormControl
             margin='normal'
             required
             fullWidth
             error={!!error.address}>
-            <InputLabel htmlFor='address'>Field Address</InputLabel>
+            <InputLabel htmlFor='address'>Your Address</InputLabel>
             <Input
               name='address'
               type='text'
@@ -129,8 +95,8 @@ const CreateFieldForm = ({ center, classes, fields, history }) => {
           <FormControl margin='normal' required fullWidth>
             <TextField
               id='outlined-textarea'
-              label='Field Description'
-              placeholder='Description'
+              label='A Few Words About Yourself'
+              placeholder='About Yourself'
               multiline
               margin='normal'
               variant='outlined'
@@ -167,14 +133,14 @@ const CreateFieldForm = ({ center, classes, fields, history }) => {
             </div>
           ) : (
             <InputLabel>
-              Tap on the map to set new field's location ⬇<br />
+              Tap on the map to set your location ⬇<br />
               Use zoom 🗺 to achive the best accuracy
             </InputLabel>
           )}
           <FormControl margin='normal' required fullWidth>
             <Map
               center={center}
-              fields={updateFields}
+              fields={[]}
               height='300px'
               onClick={handleMapTap}
             />
@@ -215,7 +181,7 @@ const CreateFieldForm = ({ center, classes, fields, history }) => {
             variant='contained'
             color='primary'
             className={classes.submit}>
-            Update Profile
+            Create Field
           </Button>
         </form>
       </Paper>
@@ -223,11 +189,11 @@ const CreateFieldForm = ({ center, classes, fields, history }) => {
   );
 };
 
-CreateFieldForm.propTypes = {
+Profile.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   center: PropTypes.array.isRequired,
   fields: PropTypes.array.isRequired
 };
 
-export default withRouter(withStyles(styles)(CreateFieldForm));
+export default withRouter(withStyles(styles)(Profile));
