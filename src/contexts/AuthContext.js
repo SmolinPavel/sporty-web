@@ -29,9 +29,10 @@ const pureAuthProvider = ({ children, history }) => {
   }
 
   const name = (decodedToken && decodedToken.name) || '';
+  const userId = (decodedToken && decodedToken.id) || '';
 
   return (
-    <Provider value={{ isAuth, login, logout, name }}>{children}</Provider>
+    <Provider value={{ isAuth, login, logout, name, userId }}>{children}</Provider>
   );
 };
 
