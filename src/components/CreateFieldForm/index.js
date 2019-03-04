@@ -215,7 +215,7 @@ const CreateFieldForm = ({ center, classes, fields, history }) => {
             variant='contained'
             color='primary'
             className={classes.submit}>
-            Update Profile
+            Create Field
           </Button>
         </form>
       </Paper>
