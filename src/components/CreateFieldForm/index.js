@@ -22,7 +22,7 @@ import { createFieldApi } from '../../api/fields';
 
 import { styles } from './styles';
 
-const CreateFieldForm = ({ center, classes, fields, history }) => {
+const CreateFieldForm = ({ classes, history }) => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
@@ -36,27 +36,23 @@ const CreateFieldForm = ({ center, classes, fields, history }) => {
   const handleMapTap = ({ latlng }) => {
     setLat(latlng.lat);
     setLng(latlng.lng);
-    console.log(latlng);
   };
 
-  const updateFields =
+  const newField =
     lat && lng
-      ? [
-          ...fields,
-          {
-            location: {
-              type: 'point',
-              lat,
-              long: lng
-            },
-            name,
-            address,
-            description,
-            date: new Date(),
-            _id: 'new'
-          }
-        ]
-      : fields;
+      ? {
+          location: {
+            type: 'point',
+            lat,
+            long: lng
+          },
+          name,
+          address,
+          description,
+          date: new Date(),
+          _id: 'new'
+        }
+      : false;
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -172,12 +168,7 @@ const CreateFieldForm = ({ center, classes, fields, history }) => {
             </InputLabel>
           )}
           <FormControl margin='normal' required fullWidth>
-            <Map
-              center={center}
-              fields={updateFields}
-              height='300px'
-              onClick={handleMapTap}
-            />
+            <Map newField={newField} height='300px' onClick={handleMapTap} />
           </FormControl>
           <FormControl margin='normal' fullWidth error={!!error.url}>
             <InputLabel htmlFor='url'>Url</InputLabel>
@@ -204,8 +195,12 @@ const CreateFieldForm = ({ center, classes, fields, history }) => {
               value={phones}
               onChange={e => setPhones(e.target.value)}
             />
-            {!!error.url ? (<FormHelperText>{error.url}</FormHelperText>) : (
-              <FormHelperText>Use comma to separate multiple phones like: +375234, +8123423</FormHelperText>
+            {!!error.url ? (
+              <FormHelperText>{error.url}</FormHelperText>
+            ) : (
+              <FormHelperText>
+                Use comma to separate multiple phones like: +375234, +8123423
+              </FormHelperText>
             )}
           </FormControl>
 

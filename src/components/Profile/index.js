@@ -139,8 +139,6 @@ const Profile = ({ center, classes, history }) => {
           )}
           <FormControl margin='normal' required fullWidth>
             <Map
-              center={center}
-              fields={[]}
               height='300px'
               onClick={handleMapTap}
             />
