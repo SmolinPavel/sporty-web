@@ -70,11 +70,16 @@ class ApiHelper {
     });
   };
 
-  //   static delete(url, token) {
-  //     const authToken = token || ApiHelper.getAuthToken();
-  //     const headers = ApiHelper.getHeaders(authToken);
-  //     return axiosClient.delete(url, { headers });
-  //   }
+  static delete(url, token) {
+    const authToken = token || ApiHelper.getAuthToken();
+    const headers = ApiHelper.getHeaders(authToken);
+
+    return fetch(url, {
+      method: 'delete',
+      mode: 'cors',
+      headers,
+    });
+  }
 
   static async doRequest(url, type, ...rest) {
     try {

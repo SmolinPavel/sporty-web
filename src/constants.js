@@ -8,12 +8,13 @@ export const DEFAULT_ZOOM = 8;
 
 // Api
 const localUrl = 'http://localhost:5000';
-const herokuUrl = 'https://sporty-brosky.herokuapp.com';
+const herokuUrl = false // 'https://sporty-brosky.herokuapp.com';
 const DOMEN = herokuUrl || localUrl;
 const BASE_URL = `${DOMEN}/api/1.0`;
 
 export const API_GET_FIELDS = `${BASE_URL}/fields`;
 export const API_CREATE_FIELD = `${BASE_URL}/fields/create`;
+export const API_DELETE_FIELD = `${BASE_URL}/fields/delete`;
 export const API_USERS_REGISTER = `${BASE_URL}/users/register`;
 export const API_USERS_LOGIN = `${BASE_URL}/users/login`;
 
