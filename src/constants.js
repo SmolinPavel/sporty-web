@@ -8,7 +8,7 @@ export const DEFAULT_ZOOM = 8;
 
 // Api
 const localUrl = 'http://localhost:5000';
-const herokuUrl = false // 'https://sporty-brosky.herokuapp.com';
+const herokuUrl = 'https://sporty-brosky.herokuapp.com';
 const DOMEN = herokuUrl || localUrl;
 const BASE_URL = `${DOMEN}/api/1.0`;
 
