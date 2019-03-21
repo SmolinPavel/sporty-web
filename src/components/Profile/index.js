@@ -76,7 +76,6 @@ const Profile = ({ center, classes, history }) => {
         <form className={classes.form} onSubmit={handleSubmit}>
           <FormControl
             margin='normal'
-            required
             fullWidth
             error={!!error.address}>
             <InputLabel htmlFor='address'>Your Address</InputLabel>
@@ -92,7 +91,7 @@ const Profile = ({ center, classes, history }) => {
               <FormHelperText>{error.address}</FormHelperText>
             )}
           </FormControl>
-          <FormControl margin='normal' required fullWidth>
+          <FormControl margin='normal' fullWidth>
             <TextField
               id='outlined-textarea'
               label='A Few Words About Yourself'
@@ -137,7 +136,7 @@ const Profile = ({ center, classes, history }) => {
               Use zoom 🗺 to achive the best accuracy
             </InputLabel>
           )}
-          <FormControl margin='normal' required fullWidth>
+          <FormControl margin='normal' fullWidth>
             <Map
               height='300px'
               onClick={handleMapTap}
